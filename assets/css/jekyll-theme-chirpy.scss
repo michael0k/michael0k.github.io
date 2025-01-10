@@ -30,11 +30,23 @@ $header-sizes: (
 );
 
 
-h1 {
-  color: #6871AA; 
-  // font-size: 3 em
+h1 { 
+  color: #DADADA; 
 }
 
+h2, h3 , h4{ 
+  color:#5D87C0; 
+}
+
+h2:after {
+  content: " ";
+  display: block;
+  border: 0.5px solid #A2ADC4;
+}
+
+h5, h6 { 
+  color:#F99417;
+}
 
 i , em , { 
   color: #9FADC6;  
@@ -58,12 +70,38 @@ color: #5D87C0
   color: #d1d5db;
 }
 
+// p { 
+//   font-family: 'Markazi Text';
+//   font-size: 19px;
+//   margin-right: auto 65px ;
+// }
+
+// // exclude subtitle from margin changes
+// p.site-subtitle.fst-italic.mb-0 { 
+  
+//   font-family: 'Markazi Text';
+//   // font-size: 16px;
+//   margin: auto; 
+
+// }
+
+
+p:not(.site-subtitle) {
+    font-family: 'Markazi Text';
+    font-size: 19px;
+    margin-right: 15%;
+}
+
+.site-subtitle {
+    font-family: 'Markazi Text';
+    margin: auto;
+}
 
 
 /* Post content */
 .post-content {
   font-family: 'Markazi Text', sans-serif;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 1.6;
   color: #d1d5db; 
 }
