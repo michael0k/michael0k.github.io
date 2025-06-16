@@ -59,6 +59,15 @@ figure.highlight {
 
 .highlight pre {
   width: 100%;
+  
+}
+
+/* Force code blocks to wrap */
+.highlight pre,
+pre code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .highlight .hll {
