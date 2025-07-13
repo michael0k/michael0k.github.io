@@ -1,17 +1,16 @@
 ---
-title: Excel Formula Refresher
+title: Examining iPhone Listings on eBay in Excel
 date: 2025-06-05 14:30:00 -0500
 toc: true
 toc_sticky: true
-categories: [EXCEL DEMO]
-tags: [excel macros demo]
+categories: [EXCEL , DEMO]
+tags: [excel , macros, demo]
 comments:
   provider: "utterances"
   utterances:
     theme: "github-dark" # "github-dark"
     issue_term: "pathname"
     label: "comment" # Optional - must be existing label.
-
 ---
 
 
@@ -29,7 +28,6 @@ comments:
 
 
 [Excel File Link](https://www.dropbox.com/scl/fi/1d8skubpagoes6f1c1l39/iphone_ebay_listings_2025.xlsm?rlkey=avoer36sjmd3x3cf9djw1ai8b&st=n3caw974&dl=0){: .btn .btn--primary}
-
 
 
 Tab names are in **bold** text. 
@@ -195,8 +193,6 @@ Indicates what condition the iPhone is in, e.g. used or brand new. These are pre
 
 #### Drop-down lists and buttons 
 
-<!-- >[!info] Flow of Actions 
->Select iPhone model with numbered black icons $\to$ Corresponding iPhone model is selected in (hidden) cell `A4` $\to$ List of "Variants" in cell `B9` changes based on iPhone model selected -->
 
 
 >**Example.** When you click the button 13 to select the iPhone 13 model. A macro that is linked to that button selects the "iPhone13" option in the (hidden) drop-down list in `A4`
@@ -326,7 +322,6 @@ Below I provide an explanation for the iPhone13 version of this formula.
 ```vb
 =IFNA(IFS(ISNUMBER(FIND("Pro Max",$A2)),"Pro Max", AND(ISNUMBER(FIND("Pro",$A2)),ISNUMBER(FIND("Pro Max",$A2))=FALSE),"Pro",ISNUMBER(FIND("Mini",$A2)),"Mini"),"Base")
 ```
-This is the formula in the variant column in the `iPhone13-RAW` tab 
 
 **Formula explanation:** The basic idea is if any of the strings associated with the variants of given iPhone model are found in the listing title then the formula will return that string as the variant. 
 	e.g. If "Pro Max" is found in the listing title the formula will return "Pro Max" as the variant assuming the listing is for an iPhone 13 Pro Max 
@@ -369,5 +364,10 @@ Returns nine characters from cell `A2`, starting from the 'i' in 'iPhone'
 
 `FIND`
 Locates the starting point of 'iPhone' in the cell `A2`
+
+
+
+>**Remark.** In part two of looking at this data set, I will explore price prediction models, using an updated version of this dataset. 
+{: .notice--info}
 
 

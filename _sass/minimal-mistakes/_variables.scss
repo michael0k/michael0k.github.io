@@ -161,7 +161,7 @@ $notice-background-mix: 80% !default;
 $code-notice-background-mix: 90% !default;
 
 /* syntax highlighting (base16) */
-$base00: #263238 !default;
+/* $base00: #263238 !default;
 $base01: #2e3c43 !default;
 $base02: #314549 !default;
 $base03: #546e7a !default;
@@ -177,6 +177,26 @@ $base0c: #89ddff !default;
 $base0d: #82aaff !default;
 $base0e: #c792ea !default;
 $base0f: #ff5370 !default;
+ */
+
+// Dracula-esque Base colors
+$base00: #282a36 !default;
+$base01: #44475a !default;
+$base02: #6272a4 !default;
+$base03: #bfbfbf !default;
+$base04: #f8f8f2 !default;
+$base05: #f8f8f2 !default;
+$base06: #f1f2f8 !default;
+$base07: #ffffff !default;
+$base08: #ff5555 !default; // red
+$base09: #ffb86c !default; // orange
+$base0a: #f1fa8c !default; // yellow
+$base0b: #50fa7b !default; // green
+$base0c: #8be9fd !default; // cyan
+$base0d: #bd93f9 !default; // blue
+$base0e: #6871AA !default; // custom purple
+$base0f: #ff79c6 !default; // pink
+
 
 /*
    Breakpoints
