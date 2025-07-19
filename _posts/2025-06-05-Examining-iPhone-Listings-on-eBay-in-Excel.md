@@ -27,7 +27,7 @@ comments:
 ### Workbook Overview 
 
 
-[Excel File Link](https://www.dropbox.com/scl/fi/1d8skubpagoes6f1c1l39/iphone_ebay_listings_2025.xlsm?rlkey=avoer36sjmd3x3cf9djw1ai8b&st=n3caw974&dl=0){: .btn .btn--primary}
+[Excel File](https://www.dropbox.com/scl/fi/1d8skubpagoes6f1c1l39/iphone_ebay_listings_2025.xlsm?rlkey=avoer36sjmd3x3cf9djw1ai8b&st=n3caw974&dl=0){: .btn .btn--info}
 
 
 Tab names are in **bold** text. 

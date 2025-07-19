@@ -17,9 +17,13 @@ Part 2 of [Examining iPhone Listings from eBay in Excel](https://michael0k.githu
 
 ## Data Source
 
-The dataset `iphone_ebay.csv` contains scraped listings from eBay, including the product name, listed price, and condition.
+The dataset `iphone_ebay.csv` contains scraped listings from eBay, including the product name, listed price, and condition. Below is a copy of the dataset that I utilized in this demonstration.
 
-[iphone_ebay.csv copy](https://www.dropbox.com/scl/fi/ziqcytqsso71fpywvfitx/iphone_ebay_06_2025.csv?rlkey=3vnr6ruaczuvmmr8c6x00r6ix&st=0tkj3g0q&dl=0){: .btn .btn--primary}
+[**iphone_ebay.csv**](https://www.dropbox.com/scl/fi/ziqcytqsso71fpywvfitx/iphone_ebay_06_2025.csv?rlkey=3vnr6ruaczuvmmr8c6x00r6ix&st=0tkj3g0q&dl=0){: .btn .btn--info}
+
+Here is a direct link to the kaggle page for this dataset :  [Dataset on Kaggle](https://www.kaggle.com/datasets/kashishparmar02/ultimateapplesamsungecom-dataset){: .btn .btn--info}
+
+
 
 ## Objective
 
@@ -54,7 +58,7 @@ More specifically, we will create a feature `iphone_full_model_variant` which si
 
 Below you can access a jupyter notebook file which contains the source code that will be discussed below. This is demonstrate the reproducibility of our findings.
 
-[Jupyter Lab File](https://github.com/michael0k/projects-and-demos/blob/73be284fae08fa3b4a726d77ae52bae37a6df3dc/iPhone_eBay_Predict_Modeling.ipynb){: .btn .btn--primary}
+[Jupyter Lab File](https://github.com/michael0k/projects-and-demos/blob/272f82843054a3ecad0419649de2f403c39a509a/iPhone_eBay_Predict_Modeling.ipynb){: .btn .btn--info}
 
 
 ## Required Libraries
@@ -73,6 +77,9 @@ Below you can access a jupyter notebook file which contains the source code that
 This demonstration aims to predict the price of iPhones listed on eBay based on their model, variant (e.g. Pro & Pro Max), and condition. By leveraging machine learning techniques, we aim to understand the key factors influencing iPhone prices in the secondary market.
 
 
+
+## 1. Initializing the Dataframe
+
 ```python
 import pandas as pd
 import numpy as np
@@ -84,7 +91,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
-# Load the dataset
+
 try:
     df = pd.read_csv('archive/iphone_ebay.csv')
     print("\nFirst 5 rows of the dataset:")
@@ -95,7 +102,7 @@ try:
     print(df.describe())
 except FileNotFoundError:
     print("Error: 'iphone_ebay.csv' not found. Please ensure the file is in the correct directory.")
-    exit() # Exit if the file isn't found
+    exit()
 
 ```
 
@@ -140,7 +147,7 @@ except FileNotFoundError:
 # Check for missing values and duplicates
 print(f"\nNull values before cleaning:\n{df.isnull().sum()}")
 print(f"\nNumber of duplicate rows: {df.duplicated().sum()}")
-# Drop duplicate rows if any
+
 df.drop_duplicates(inplace=True)
 df.reset_index(drop=True, inplace = True)
 print(f"Number of rows after dropping duplicates: {len(df)}")
@@ -162,13 +169,13 @@ We have 3 features/columns which all contain strings and zero null values.
 > **$\approx$ 62% of our rows have unique listing names, what does that say about the nearly 30% remaining listings ?**
 >
 > 1. Some (different) sellers are using identical listing names
-> 2. Some sellers are relisting their iPhone listings on eBay because they sell numerous iPhones through out the year
+> 2. Some sellers are relisting their iPhone listings on eBay because they sell numerous iPhones throughout the year
 > 3. Some sellers relist their individual iPhone until they successfully make a sale
 >
 > Looking at the first 10 rows of data we can see at least one price range in our `price` feature in dataframe `df`.
 {: .notice -- primary}
 
-## Data Cleaning and Feature Engineering 
+## 2. Data Cleaning and Feature Engineering 
 
 This part focuses on transforming raw data into usable features for the model, including cleaning the price, encoding the condition, and extracting iPhone model variants.
 
@@ -198,9 +205,9 @@ def clean_price(price_str):
     return np.nan 
 
 df['price_cleaned'] = df['price'].apply(clean_price)
-
 df.dropna(subset=['price_cleaned'], inplace=True)
 df.reset_index(drop=True, inplace = True) 
+
 print(f"Rows after cleaning 'price' and dropping NaNs: {len(df)}")
 df.head()
 ```
@@ -300,10 +307,12 @@ condition_mapping = {
     'Excellent - Refurbished': 5,
     'Brand New': 6
 }
+
 df['condition_encoded'] = df['condition'].map(condition_mapping)
 df.dropna(subset=['condition_encoded'], inplace=True)
 df.reset_index(drop = True, inplace = True) 
 df['condition_encoded'] = df['condition_encoded'].astype(int) 
+
 print(f"Rows left after encoding 'condition' and dropping NaNs: {len(df)}")
 
 ```
@@ -323,7 +332,7 @@ Here comes our ugliest block of code so far. Below we create the function `extra
 ```python
 def extract_model_name(name):
     name_lower = name.lower()
-    model_match = re.search(r'(?<=iphone)\s*(xr|xs\smax|xs|x|se\s*[2-3]|se)|(([1][1-5]|[3-9])\s(plus|pro\smax|pro|mini)?)',name_lower)
+    model_match = re.search(r'(?<=iphone)\s*(xr|xs\smax|xs|x|se\s*[2-3]|se)|(([1][1-5]|[3-9])\s*(plus|pro\smax|pro|mini)?)',name_lower)
     model = model_match.group() if model_match else 'Unknown'
     return model
 
@@ -331,7 +340,7 @@ df['model_name'] = df['name'].apply(lambda x: pd.Series(extract_model_name(x).st
 df['model_name'] = df['model_name'].replace('Unknown',np.nan)
 df.dropna(subset='model_name' , axis = 0) 
 
-df_processed = pd.get_dummies(df, columns = ['model_name'] , prefix='iPhone', drop_first = True) 
+df_processed = pd.get_dummies(df, columns = ['model_name'] , prefix='iPhone', drop_first = False) 
 
 print("\nSample of DataFrame after feature engineering:")
 
@@ -356,16 +365,16 @@ print(df_processed[sample_cols].head())
 r'(?<=iphone)\s*(xr|xs\smax|xs|x|se\s*[2-3]|se)|(([1][1-5]|[3-9])\s(plus|pro\smax|pro|mini)?)'
 ```
 
-**Big picture:** We look for the substring `'iphone'` and then search for the proceeding indicators of the various iphone models. We either match with an X* or SE model OR an iphone 1 to iphone 15 and their variants. 
+**Big picture:** We look for the substring `'iphone'` and then search for the proceeding indicators of the various iPhone models. We either match with an X or SE model. If we find neither, then we look for indicators of other iPhone models (3,4,$\dots$, 15) (i.e. the iphone 3 to iphone 15 and their variants).  
 
 
 `(?<=iphone)`
 - this code tells the machine to look for the `'iphone'` substring as a "prefix" to our upcoming matches but to *exclude* `'iphone'` from our matches
 
 `(xr|xs\smax|xs|x|se\s*[2-3]|se)|(([1][1-5]|[3-9])`
-1. We look for the various x models , making sure to look for xs max before xs to avoid reductively grouping all xs phones under 'xs'
+1. We parse the listing title for the various iPhone x models , making sure to look for `'xs max'` before `'xs'` to avoid reductively grouping all xs phones under `'xs'`
 2. For SE models, we first look for 2nd or 3rd generation models, any remaining se listings will fall under `'se'`
-3. Or we first look for iphone models 11 to 15 or iphone models 3 - 9 if we still don't have a match
+3. Or we look for iphone models 11 to 15 or iphone models 3 - 9 if we still don't have a match
 
 This leaves us with 1039 known models and 48 unknown models. You can verify this before running the lines that replace 'Unknown' in `df['model_name']`. 
 
@@ -382,57 +391,48 @@ for x in df['model_name']:
 print(f'We have {n_models} known models in our dataframe and {old_models} unknown models in our dataframe.') 
 ```
 
-
 ```python
 df.reset_index(drop = True, inplace = True) 
-```
-
-
-```python
 df['model_name'].value_counts()
 ```
 
-
-
-
     model_name
-    12            127
-    11            127
+    12            132
+    11            128
     xr             66
-    8              59
-    13             54
+    13             57
+    8              57
     x              43
     12 pro         43
     12 pro max     41
     se 2           39
+    7              39
+    6              37
     13 pro max     34
-    7              34
-    14             34
     13 pro         33
+    14             32
     12 mini        31
-    8 plus         27
     xs             26
+    8 plus         25
     11 pro         23
+    5              22
+    14 plus        19
     11 pro max     19
     se 3           19
-    14 plus        19
     14 pro max     18
     se             18
-    7 plus         18
     14 pro         17
-    5              12
-    6              12
+    7 plus         17
     13 mini        11
     xs max         10
-    6 plus          8
+    6 plus          7
     15              6
     15 pro max      5
-    3               4
+    9               5
+    4               3
+    3               3
     15 pro          1
-    4               1
     Name: count, dtype: int64
-
-
 
 
 ```python
@@ -441,14 +441,6 @@ df['model_name'].value_counts().plot.bar()
 ```
 
 
-
-
-    <Axes: xlabel='model_name'>
-
-
-
-
-    
 ![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_15_1.png){: .align-center}
     
 
@@ -460,14 +452,14 @@ model_count = len(df['model_name'].unique())
 print(model_count)
 ```
 
-    35
+    36
 
 
 >***Remark.*** I did not discern between different variants of the iPhone 3-5 as I was originally going to exclude older models entirely. While argueably lazy, very few people are actively seeking such old iPhones on the second hand market. Any model that came before the 'plus' variants will just be grouped under the number in the model name.
-e.g. The iPhone 3Gs would just fall under the iphone_3
+e.g. The iPhone 3Gs would just fall under `iPhone_3`.
 {: .notice--info}
 
-## Exploratory Data Analysis (EDA)
+## 3. Exploratory Data Analysis (EDA)
 
 This section includes various visualizations to understand the distributions and relationships within the cleaned data.
 
@@ -574,6 +566,65 @@ plt.show()
     
 ![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_27_0.png){: .align-center}
     
+Let's examine some of these outlier prices of our various iPhone models. Recall that an outlier is defined as a point that falls above the upper extreme or below the lower extreme in our box plot. The upper and lower extremes can be determined by the following equations. 
+
+$$\begin{align*} &\text{Upper extreme/whisker} = \text{Upper quartile} +  (IQR \cdot 1.5) \\
+&\text{Lower extreme/whisker} = \text{Lower quartile} -  (IQR \cdot 1.5) \end{align*}$$
+
+Where $IQR$ is the interquartile range , the difference between the upper and lower quartiles. 
+
+
+```python
+cols = ['11', '8', 'xr']
+
+for col in cols: 
+    df_bxmodel = df[df['model_name'] == col].copy() 
+    u_quart = np.percentile(df_bxmodel['price_cleaned'], 75)
+    l_quart = np.percentile(df_bxmodel['price_cleaned'], 25)
+    IQR = float(u_quart) - float(l_quart) 
+    u_extreme = u_quart + (1.5 * IQR)
+    l_extreme = l_quart - (1.5 * IQR)
+    outliers = [x for x in df_bxmodel['price_cleaned'] if x > u_extreme or x < l_extreme] 
+    print(f"\nUpper quartile value for the iPhone {col} is: {u_quart}")
+    print(f"\nLower quartile value for the iPhone {col} is: {l_quart}")
+    print(f"\nInterquartile range for the iPhone {col} is: {IQR}") 
+    print(f"\nNumber of outliers for the iPhone {col} is: {len(outliers)}")
+    print("\n ---")
+```
+
+    
+    Upper quartile value for the iPhone 11 is: 279.2375
+    
+    Lower quartile value for the iPhone 11 is: 229.9975
+    
+    Interquartile range for the iPhone 11 is: 49.24000000000001
+    
+    Number of outliers for the iPhone 11 is: 9
+    
+     ---
+    
+    Upper quartile value for the iPhone 8 is: 143.6
+    
+    Lower quartile value for the iPhone 8 is: 109.99
+    
+    Interquartile range for the iPhone 8 is: 33.61
+    
+    Number of outliers for the iPhone 8 is: 4
+    
+     ---
+    
+    Upper quartile value for the iPhone xr is: 219.99
+    
+    Lower quartile value for the iPhone xr is: 184.95
+    
+    Interquartile range for the iPhone xr is: 35.04000000000002
+    
+    Number of outliers for the iPhone xr is: 5
+    
+     ---
+
+
+Here we see that out of the three selected models, the iPhone 11 (base model) has the most price outliers and the largest interquartile range. 
 
 
 ### Visualizing Correlation Data 
@@ -585,7 +636,7 @@ corr_matrix = df_processed[correlation_features].corr()
 
 plt.figure(figsize=(14, 12))
 sns.heatmap(corr_matrix, annot=False, cmap='coolwarm', fmt=".2f", linewidths=.5) # annot=True can make it crowded for many features
-plt.title('Correlation Matrix of Features', fontsize=16)
+plt.title('Correlation Matrix of iPhone Models', fontsize=16)
 plt.xticks(fontsize=8)
 plt.yticks(fontsize=8, rotation=0)
 plt.tight_layout()
@@ -649,6 +700,7 @@ $$\hat{y} = b_0 + b_1 x_1 + b_2 x_2 + \dots b_nx_n$$
 ```python
 # Define independent variables (X) and target variable (y)
 # X includes condition_encoded and all one-hot encoded full_model_variant columns from df_processed
+
 X_columns = ['condition_encoded'] + [col for col in df_processed.columns if col.startswith('iPhone_')]
 X = df_processed[X_columns]
 y = df_processed['price_cleaned']
@@ -679,10 +731,8 @@ Here we will evaluate the performance of our model by calculating key statistica
 
 
 ```python
-# Make predictions on the test set
 y_pred = model.predict(X_test)
 
-# Calculate evaluation metrics
 mae = mean_absolute_error(y_test, y_pred)
 mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
@@ -701,16 +751,17 @@ print(f"R-squared (R2): {r2:.4f}")
 
 
 
-#### **Mean Absolute Error (MAE):**
+### **Mean Absolute Error (MAE):**
 
 $$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|$$
 
 
-#### **Mean Squared Error (MSE):** 
+### **Mean Squared Error (MSE):** 
+
 $$\text{MSE } = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y_i})^2  \\ $$   
 
 
-#### **Root Mean Squared Error (RMSE):**
+### **Root Mean Squared Error (RMSE):**
 
 $$\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$$
 
@@ -722,7 +773,7 @@ $$\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$$
 * $\hat{y}_i$: The predicted value of the dependent variable for the $i$-th observation, determined by the iPhone model and condition.
 
 
-#### **The coefficient of determination ($R^2$):**
+### **The coefficient of determination ($R^2$):**
 
 $$R^2 = \bigg(1 - \frac{\text{MSE of regression line}}{\text{MSE of the average of the data}} \bigg)$$
 
@@ -732,7 +783,7 @@ $$R^2 = \bigg(1 - \frac{\text{MSE of regression line}}{\text{MSE of the average 
 ```python
 plt.figure(figsize=(10, 6))
 plt.scatter(y_test, y_pred, alpha=0.6)
-plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', lw=2) # Diagonal line
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', lw=2) # The diagonal 
 plt.title('Actual vs. Predicted iPhone Prices', fontsize=16)
 plt.xlabel('Actual Price ($)', fontsize=12)
 plt.ylabel('Predicted Price ($)', fontsize=12)
@@ -791,7 +842,7 @@ plt.show()
 
 Here we can see that the residuals are mostly scattered around the horizontal line at zero. There doesn't appear to be a significantly non-linear pattern , which likely means that the choice of a linear model (as opposed to a polynomial regression) was a good one. The variance of the errors appears to be constant, the spread of the residuals appears consistent across the domain of predicted prices. Again, this is further evidence that our model is performing decently well. 
 
-## Conclusion 
+## 6. Conclusion 
 
 This demonstration showcased the process of bulding a multi-linear regression model to predict iPhone prices. The model acheived an $R^2$ of $0.6190$ , indicating that it explains a significant portion ($\approx 62 \%$) of the price variance. Meaning that our two chosen features make significant contributions to iPhone prices on the second hand eBay market. The Mean Absolute Error suggests that , on average , predictions are off by $ \approx \$61.$ So while the model performs well relative to the other feature options, I would not use this model for anything other than a demonstration. 
 
