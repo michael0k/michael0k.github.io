@@ -4,7 +4,7 @@ date: 2025-07-10 10:00:00 -0500
 toc: true
 toc_sticky: true
 categories: [PYTHON , DEMO]
-tags: [pandas, scikit-learn , python, demo, predictive modeling, consumer technology]
+tags: [pandas, scikit-learn , python, machine learning, demo, predictive modeling, consumer technology]
 comments:
   provider: "utterances"
   utterances:
@@ -538,7 +538,7 @@ The amount of outliers on the `'Pre-Owned'` condition may be due to the shear am
 
 Next, we create a box plot to see the distribution of price amongst the top 15 iPhone models. 
 
-### iPhone Model Variants vs Price 
+### Distribution of Prices Across the Top 15 iPhone Models
 
 
 ```python
