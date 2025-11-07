@@ -1,5 +1,5 @@
 ---
-title: iPhone Price Prediction with eBay Data
+title: iPhone Price Prediction Using eBay Data
 date: 2025-07-10 10:00:00 -0500
 toc: true
 toc_sticky: true

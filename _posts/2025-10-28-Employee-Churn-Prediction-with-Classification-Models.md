@@ -1495,8 +1495,6 @@ y_pred_proba = model_rf.predict_proba(X2)[:,1]
 df2_final = df2_processed
 df2_final['churn_prediction'] = y_pred_final
 df2_final['churn_probability'] = y_pred_proba
-
-
 ```
 
 
@@ -1517,7 +1515,6 @@ churn_departments
 
 for x in churn_departments: #rename department columns to omit "department_" prefix
   df_churn.rename( columns = {x : x.split("_")[1]} , inplace = True)
-
 ```
     Index(['satisfaction_level', 'last_evaluation', 'number_project',
            'average_monthly_hours', 'time_spend_company', 'work_accident',
