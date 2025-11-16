@@ -60,10 +60,11 @@ import json
 import os
 import csv 
 import time
-import calendar
 import datetime as dt
+import calendar
 import pandas as pd
 import matplotlib.pyplot as plt 
+import seaborn as sns 
 import numpy as np
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy as spot
@@ -121,7 +122,7 @@ df.info()
 
 
 
-## 2. dataframe modifications
+## 2. Dataframe modifications
 We will explore the contents of our dataframe and remove any irrelevant features.
 
 First, we set the data type for the `ts` (timestamp) column to datetime.
@@ -1721,7 +1722,7 @@ for x in months_list:
     For October , the most frequent hour of listening was 11.0
 
 
-Finally, the average peak streaming hour for the year (so far).
+The average peak streaming hour for the year (so far).
 
 ```python
 print(f"The average peak streaming hour of 2025 is {int(np.mean(peak_hours_list))}.")
@@ -1729,7 +1730,16 @@ print(f"The average peak streaming hour of 2025 is {int(np.mean(peak_hours_list)
     The average peak streaming hour of 2025 is 11.
 
 
+Finally, we can create a crude distribution plot of the hours that appear in the timestamp column of our main dataframe `df`. 
 
+
+```python 
+sns.displot(data = df["ts"].dt.hour) 
+```
+
+![image-center](/assets/images/2025-11-06-We-Have-Spotify-Wrapped-At-Home/ts_hour_dist_plot.png){: .align-center}
+
+As shown with the previous analysis, 11 AM appears to be the peak listening hour of the year, the hour with the most streams throughout the months. Most of the streaming seems to be concentrated in the morning / early afternoon. 
 
 ## 5. Conclusion 
 
