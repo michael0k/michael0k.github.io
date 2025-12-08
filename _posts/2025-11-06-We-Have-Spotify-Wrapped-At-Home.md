@@ -44,7 +44,7 @@ The data is this post spans from Janurary 1st to October 29th.
 
 ### Tools utilized 
 
-1. Python 
+1. Jupyter Lab 
 2. Tableau
 
 
@@ -1172,7 +1172,8 @@ We will create a `season` feature for the dataframe.
 
 ```python
 def get_season(date): 
-    date_no_time = dt.datetime.strptime(date, "%Y-%m-%d")
+    date_str = str(date)[:10] #to omit the time
+    date_no_time = dt.datetime.strptime(date_str, "%Y-%m-%d")
     month = date_no_time.month
     
     if month in [12,1,2]: 
@@ -1187,8 +1188,7 @@ def get_season(date):
 
 
 ```python
-for x in df["ts"]: 
-    df.loc[df["ts"] == x , "season"] = get_season(str(x)[:10]) #slicing is not the best workaround for excluding time 
+df["season"] = df["ts"].apply(get_season)
 ```
 
 
