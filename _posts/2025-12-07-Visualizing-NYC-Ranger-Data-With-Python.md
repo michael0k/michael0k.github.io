@@ -19,7 +19,7 @@ The primary dataset used in this post contains information about requests (in th
 
 We have analyzed this data to gain insights into when and where calls are commonly made. For what reasons calls are made, the outcomes for the animals involved in these calls, the conditions of the animals in these calls, and the nature of the resources used in response to these calls. 
 
-[The Jupyter Notebook](https://github.com/michael0k/projects-and-demos/blob/ebaa5bb65c699cb4d72ed0c27d716320e399f881/nyc_park_ranger_project/notebooks/Urban_Park_Ranger_Analysis.ipynb){: .btn .btn--primary}
+[The Jupyter Notebook](https://github.com/michael0k/projects-and-demos/tree/82c8eeb6d8b3f077b329973d2e534c0ce82ac30f/nyc_park_ranger_project/notebooks){: .btn .btn--primary}
 
 
 
