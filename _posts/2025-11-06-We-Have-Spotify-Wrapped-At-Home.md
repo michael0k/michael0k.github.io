@@ -17,8 +17,9 @@ comments:
 ![image-center](/assets/images/2025-11-06-We-Have-Spotify-Wrapped-At-Home/Spotify_Habits_2025.png){: .align-center}
 
 
-[Link to dashboard](https://public.tableau.com/views/Spotify_Wrapped_2/SpotifyListeningHabits2025?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link){: .btn .btn--primary}
+[The Tableau Dashboard](https://public.tableau.com/views/Spotify_Wrapped_2/SpotifyListeningHabits2025?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link){: .btn .btn--primary}
 
+[The Jupyter Notebook](https://github.com/michael0k/projects-and-demos/blob/e3fd4dc8ad081f1b768f5d121e4f92fa0d52b4aa/spotify_analysis/Spotify_Analysis.ipynb){: .btn .btn--primary}
 
 
 ## Preface
@@ -128,8 +129,8 @@ We will explore the contents of our dataframe and remove any irrelevant features
 First, we set the data type for the `ts` (timestamp) column to datetime.
 
 ```python
-df["ts"] = pd.to_datetime(df["ts"] , utc = True , yearfirst = True) 
-df.sort_values("ts" , axis = 0 , ascending=True , inplace = True)
+df["ts"] = pd.to_datetime(df["ts"], utc=True)
+df = df.sort_values("ts" , ignore_index=True)
 ```
 
 ### Filter for 2025 only 
@@ -1322,42 +1323,14 @@ Let's create some simple charts in Python to learn more about my listening habit
 I am curious to see my top five music genres, and the percentage of my streams that belong to each. 
 
 ```python
-top5_genres = df["genre"].value_counts().index.tolist()[:5]
-top5_genres
-top5_genres_counts = df["genre"].value_counts().nlargest(5).values.tolist()
-top5_genres_counts
-```
-
-
-
-
-    [11090, 2955, 1635, 1227, 624]
-
-
-
-
-```python
-fig, ax = plt.subplots(figsize=(6, 3), subplot_kw=dict(aspect="equal"))
-
-data = top5_genres_counts
-
-def func(pct, allvals):
-    absolute = int(np.round(pct/100.*np.sum(allvals)))
-    return f"{pct:.1f}%"
-
-
-wedges, texts, autotexts = ax.pie(data, autopct=lambda pct: func(pct, data),
-                                  textprops=dict(color="w"))
-
-ax.legend(wedges, top5_genres,
-          title="Genres",
-          loc="center left",
-          bbox_to_anchor=(1, 0, 0.5, 1))
-
-plt.setp(autotexts, size=8, weight="bold")
-
-ax.set_title("Top 5 Genres of 2025")
-
+pie = df['genre'].value_counts().nlargest(5).plot(
+    kind='pie',
+    autopct='%1.1f%%',
+    legend=True,
+    labels=None
+)
+plt.title('Top 5 Genres of 2025')
+plt.ylabel('')
 plt.show()
 ```
 
@@ -1376,8 +1349,8 @@ Here we create a horizontal bar chart for the top 10 artists, ranking them by nu
 
 
 ```python
-top10_artists_listens = df.artist_name.value_counts()[0:10] 
-top10_artists = top10_artists_listens.nlargest(10).index
+top10_artists_listens = df.artist_name.value_counts().nlargest(10) 
+top10_artists = top10_artists_listens.index
 ```
 
 
@@ -1410,14 +1383,27 @@ plt.show()
         
 ![image-center](/assets/images/2025-11-06-We-Have-Spotify-Wrapped-At-Home/output_35_0.png){: .align-center}
 
+Alternatively, we could have used 
 
+```python
+top_artists = df["artist_name"].value_counts().nlargest(10)
+
+ax = top_artists.plot(
+    kind="barh",
+    title="Top 10 artists",
+    xlabel="Number of streams",
+    ylabel="Artist",
+    color="c"
+)
+ax.grid(axis="x")
+ax.invert_yaxis()
+```
 
 
 ### Top 10 albums
 ```python
-top10_albums_listens = df.album_name.value_counts()[0:10]
-top10_albums_listens
-top10_albums = top10_albums_listens.nlargest(10).index
+top10_albums_listens = df.album_name.value_counts().nlargest(10)
+top10_albums = top10_albums_listens.index
 ```
 
 
@@ -1440,10 +1426,8 @@ plt.show()
 ### Top 10 tracks 
 
 ```python
-top10_track_listens = df["track_name"].value_counts().tolist()[0:10]
-top10_tracks = df["track_name"].value_counts().nlargest(10).index 
-top10_tracks
-top10_track_listens
+top10_track_listens = df["track_name"].value_counts().nlargest(10)
+top10_tracks = top10_track_listens.index 
 ```
 
 
@@ -1472,7 +1456,7 @@ months = list(calendar.month_name[1:11])
 
 artists_month = dict()
 
-for x,y in zip(range(1,12) ,months): 
+for x,y in zip(range(1,11) ,months): 
     top_artist = df.loc[df["ts"].dt.month == x , "artist_name"].value_counts().idxmax()
     artists_month[y] = top_artist
 
@@ -1567,12 +1551,8 @@ df_days_hours["day_ind"] = df_days_hours["ts"].dt.day_of_year
 df_days_hours["hour_ind"] = df_days_hours["ts"].dt.hour
 df_days_hours["month"] = df_days_hours["ts"].dt.month
 
-
-
 cols_list = df_days_hours.columns.tolist()
 cols = cols_list[:1] + cols_list[8:11]
-
-
 
 df_days_hours = df_days_hours[cols]
 df_days_hours
@@ -1598,7 +1578,6 @@ Create the `month_name` feature:
 
 ```python 
 for x in df_days_hours["month"]:
-   # df_days_hours["month_name"] = df_days_hours.loc[df["month"] == int(x) , "month_name"] 
     df_days_hours.loc[df_days_hours["month"] == int(x) ,"month_name"] = calendar.month_name[x]
 
 df_days_hours.tail()
