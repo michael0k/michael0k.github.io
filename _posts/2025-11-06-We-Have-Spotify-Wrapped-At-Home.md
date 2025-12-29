@@ -19,7 +19,7 @@ comments:
 
 [The Tableau Dashboard](https://public.tableau.com/views/Spotify_Wrapped_2/SpotifyListeningHabits2025?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link){: .btn .btn--primary}
 
-[The Jupyter Notebook](https://github.com/michael0k/projects-and-demos/blob/e3fd4dc8ad081f1b768f5d121e4f92fa0d52b4aa/spotify_analysis/Spotify_Analysis.ipynb){: .btn .btn--primary}
+[The Jupyter Notebook](https://github.com/michael0k/projects-and-demos/blob/8431f32f1154363678cdcab5616eb4cccf1ffc35/spotify_analysis/notebooks/Spotify_Analysis.ipynb){: .btn .btn--primary}
 
 
 ## Preface
