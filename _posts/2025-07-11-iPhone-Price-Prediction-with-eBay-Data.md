@@ -1,5 +1,5 @@
 ---
-title: iPhone Price Prediction Using eBay Data
+title: Predicting the Prices of Used iPhones From eBay With Python
 date: 2025-07-10 10:00:00 -0500
 toc: true
 toc_sticky: true
@@ -19,7 +19,7 @@ Part 2 of [Examining iPhone Listings from eBay in Excel](https://michael0k.githu
 
 The dataset `iphone_ebay.csv` contains scraped listings from eBay, including the product name, listed price, and condition. Below is a copy of the dataset that I utilized in this demonstration.
 
-[**iphone_ebay.csv**](https://www.dropbox.com/scl/fi/ziqcytqsso71fpywvfitx/iphone_ebay_06_2025.csv?rlkey=3vnr6ruaczuvmmr8c6x00r6ix&st=0tkj3g0q&dl=0){: .btn .btn--info}
+[**iphone_ebay.csv**](https://github.com/michael0k/Project-Predicting-the-Prices-of-Used-iPhones-From-eBay-With-Python/tree/390df8dc3c273cdd91189d53f1b4f6d5b27563a9/data){: .btn .btn--info}
 
 Here is a direct link to the kaggle page for this dataset :  [Dataset on Kaggle](https://www.kaggle.com/datasets/kashishparmar02/ultimateapplesamsungecom-dataset){: .btn .btn--info}
 
@@ -58,7 +58,7 @@ More specifically, we will create a feature `iphone_full_model_variant` which si
 
 Below you can access a jupyter notebook file which contains the source code that will be discussed below. This is demonstrate the reproducibility of our findings.
 
-[Jupyter Lab File](https://github.com/michael0k/projects-and-demos/blob/272f82843054a3ecad0419649de2f403c39a509a/iPhone_eBay_Predict_Modeling.ipynb){: .btn .btn--info}
+[Jupyter Notebook](https://github.com/michael0k/Project-Predicting-the-Prices-of-Used-iPhones-From-eBay-With-Python/tree/390df8dc3c273cdd91189d53f1b4f6d5b27563a9/notebooks){: .btn .btn--info}
 
 
 ## Required Libraries
@@ -441,7 +441,7 @@ df['model_name'].value_counts().plot.bar()
 ```
 
 
-![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_15_1.png){: .align-center}
+![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_16_1.png){: .align-center}
     
 
 
@@ -479,7 +479,7 @@ plt.show()
 
 
     
-![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_20_0.png){: .align-center}
+![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_21_0.png){: .align-center}
     
 
 
@@ -510,7 +510,7 @@ plt.show()
 
 
     
-![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_23_0.png){: .align-center}
+![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_24_0.png){: .align-center}
     
 
 
@@ -564,7 +564,7 @@ plt.show()
 
 
     
-![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_27_0.png){: .align-center}
+![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_28_0.png){: .align-center}
     
 Let's examine some of these outlier prices of our various iPhone models. Recall that an outlier is defined as a point that falls above the upper extreme or below the lower extreme in our box plot. The upper and lower extremes can be determined by the following equations. 
 
@@ -815,7 +815,7 @@ plt.show()
 
 
     
-![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_41_0.png){: .align-center}
+![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_45_0.png){: .align-center}
     
 
 
@@ -836,7 +836,7 @@ plt.show()
 
 
     
-![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_43_0.png){: .align-center}
+![image-center](/assets/images/2025-07-11-iPhone-Price-Prediction-with-eBay-Data/output_47_0.png){: .align-center}
     
 
 
