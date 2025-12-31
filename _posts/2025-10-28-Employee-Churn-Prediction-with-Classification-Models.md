@@ -13,22 +13,30 @@ comments:
     label: "comment" # Optional - must be existing label.
 ---
 
+
+
+
 ## Scenario 
 
 We are aiding a company that is having problems retaining employees. We are here to proactively identify employees that are of high churn risk. 
 
->**Objective:** Build a machine learning model trained on previous data that can predict a new employee's likelihood of leaving 
-{: .notice--primary}
+>**Objective.** Build a machine learning model trained on previous data that can predict a new employee's likelihood of leaving.
+{: .notice--primary} 
 
 
 Deliverable form: 
 A report/dashboard
+
+[Link to Dashboard](https://lookerstudio.google.com/reporting/0a4c54b6-b6dd-4562-97e8-1c4d69ea1f38){: .btn .btn--primary}
+
 
 ### Analysis Questions 
 1. What is causing employees to leave ? 
 2. Who is predicted to leave ?
 3. Are employees satisfied ? 
 4. What departments have the most churn ? 
+
+
 
 
 
@@ -51,6 +59,9 @@ Data for analysis: [`tbl_new_employees.csv`](https://github.com/michael0k/projec
 
 ![image-center](/assets/images/2025-10-28-Employee-Churn-Prediction-with-Classification-Models/mermaid_chart.png){: .align-center}
 
+
+
+
 ### Required Libraries (Python) 
 
 Since we will be developing our model in Google Colab, we have a number of libraries that we will import and utilize in the project. 
@@ -61,6 +72,7 @@ Since we will be developing our model in Google Colab, we have a number of libra
 * `seaborn`: For advanced statistical data visualization.
 * `matplotlib.pyplot`: For creating static, interactive, and animated visualizations.
 
+[The Jupyter Notebook](https://github.com/michael0k/Project-Employee-Churn-Prediction-with-Classification-Models/tree/ce2bff8e4b4e6c21dd6f731f406f12b58a329328/notebooks){: .btn .btn--primary}
 
 
 ## 1. Google BigQuery: Creating a table view 
@@ -85,7 +97,7 @@ We proceeded to save the results of this query as a [view](https://docs.cloud.go
 
 ## 2. Google Colab: Connect to BigQuery
 
-**Remark.** You can confirm the soundness of the code snippets below by downloading a copy of the [Jupyter notebook](https://github.com/michael0k/projects-and-demos/blob/7201cba0bd8705215fde9659df787a1529d950c4/employee_churn/Employee_Churn_Analysis.ipynb) that contains all of the code below. 
+**Remark.** You can confirm the soundness of the code snippets below by downloading a copy of the [Jupyter notebook](https://github.com/michael0k/Project-Employee-Churn-Prediction-with-Classification-Models/tree/ce2bff8e4b4e6c21dd6f731f406f12b58a329328/notebooks) that contains all of the code below. 
 {: .notice--info}
 
 ```python
@@ -2265,14 +2277,10 @@ Recommendations for addressing employee churn:
 * Professinal Development Initiatives: Investing in training and development helps employees grow within the company, increasing their commitment and job satisfaction. 
 * Reward Long Term Employees: Offering retention incentives encourages long-term commitment, addressing the importance of time spent with the company. 
 
+>**Note.** Below you will find an image preview of the dashboard with an embedded link to the actual Looker dashboard.
+{: .notice--primary}  
 
-We've summarized the results of our analysis with a simple Looker Studio dashboard. Below you will find a link to the dashboard and an image preview of it. 
-
-[Link to Dashboard](https://lookerstudio.google.com/reporting/0a4c54b6-b6dd-4562-97e8-1c4d69ea1f38){: .btn .btn--primary}
-
-
-
-![image-center](/assets/images/2025-10-28-Employee-Churn-Prediction-with-Classification-Models/Churn_Report.png){: .align-center}
+[![image-center](/assets/images/2025-10-28-Employee-Churn-Prediction-with-Classification-Models/Churn_Report.png){: .align-center}](https://lookerstudio.google.com/reporting/0a4c54b6-b6dd-4562-97e8-1c4d69ea1f38)
 
 
 
